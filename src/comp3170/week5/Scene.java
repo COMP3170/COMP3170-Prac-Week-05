@@ -1,4 +1,4 @@
-package comp3170.week4;
+package comp3170.week5;
 
 import org.lwjgl.opengl.GLCapabilities;
 import static org.lwjgl.opengl.GL41.*;
@@ -17,6 +17,8 @@ import comp3170.Shader;
 import comp3170.ShaderLibrary;
 import comp3170.Window;
 import comp3170.SceneObject;
+
+import comp3170.week5.sceneobjects.*;
 
 public class Scene extends SceneObject {
 	

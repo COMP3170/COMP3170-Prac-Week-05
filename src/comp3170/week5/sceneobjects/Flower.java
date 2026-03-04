@@ -1,4 +1,4 @@
-package comp3170.week4;
+package comp3170.week5.sceneobjects;
 
 import static org.lwjgl.opengl.GL41.*;
 
