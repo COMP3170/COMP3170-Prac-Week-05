@@ -3,7 +3,6 @@ package comp3170.week5.sceneobjects;
 import static org.lwjgl.opengl.GL41.*;
 
 import org.joml.Matrix4f;
-import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
@@ -16,30 +15,19 @@ public class Flower extends SceneObject {
 	
 	private static final String VERTEX_SHADER = "vertex.glsl";
 	private static final String FRAGMENT_SHADER = "fragment.glsl";
-		
-	private Vector3f position;
-	private float angle; 		// in radians
-	private Vector2f scale;
-	
 	private Shader shader;
 	
-	private Matrix4f modelMatrix;
-	
-	private final float STEM_HEIGHT = 1.0f;
-	private final float STEM_WIDTH = 0.1f;
+	private final float HEIGHT = 1.0f;
+	private final float WIDTH = 0.1f;
+	private Vector3f colour = new Vector3f(0f, 0.5f, 0f); // Dark Green
 
-	private Vector4f[] stemVertices;
-	private int stemVertexBuffer;
-	private int[] stemIndices;
-	private int stemIndexBuffer;
-	private Vector3f stemColour;
+	private Vector4f[] vertices;
+	private int vertexBuffer;
+	private int[] indices;
+	private int indexBuffer;
 
-	
 	public Flower(int nPetals) {
-		
 		shader = ShaderLibrary.instance.compileShader(VERTEX_SHADER, FRAGMENT_SHADER);		
-		position = new Vector3f();
-		modelMatrix = new Matrix4f();
 	
 		// make the stem of the flower
 
@@ -56,78 +44,34 @@ public class Flower extends SceneObject {
 		//  (-w/2, 0)     (w/2, 0)	
 		
 		//@formatter:off
-		stemVertices = new Vector4f[] {
-			new Vector4f(-STEM_WIDTH / 2,           0, 0, 1),
-			new Vector4f( STEM_WIDTH / 2,           0, 0, 1),
-			new Vector4f(-STEM_WIDTH / 2, STEM_HEIGHT, 0, 1),
-			new Vector4f( STEM_WIDTH / 2, STEM_HEIGHT, 0, 1),
+		vertices = new Vector4f[] {
+			new Vector4f(-WIDTH / 2,           0, 0, 1),
+			new Vector4f( WIDTH / 2,           0, 0, 1),
+			new Vector4f(-WIDTH / 2, HEIGHT, 0, 1),
+			new Vector4f( WIDTH / 2, HEIGHT, 0, 1),
 		};
 		//@formatter:on
+		vertexBuffer = GLBuffers.createBuffer(vertices);
 		
-		stemVertexBuffer = GLBuffers.createBuffer(stemVertices);
-		
-	    stemIndices = new int[] {
+	    indices = new int[] {
 		    	0, 1, 2,
 		    	3, 2, 1,
 		};
 		    
-		stemIndexBuffer = GLBuffers.createIndexBuffer(stemIndices);
-		stemColour = new Vector3f(0f, 0.5f, 0f);	// dark green
-
-		// TODO: make the flower head with nPetals petals
-	}
-
-	public Vector3f getPosition(Vector3f dest) {
-		return dest.set(position);
+		indexBuffer = GLBuffers.createIndexBuffer(indices);
 	}
 	
-	public void setPosition(Vector3f position) {
-		this.position.set(position);
-	}
-
-	public float getAngle() {
-		return angle;
-	}
-
-	public void setAngle(float angle) {
-		this.angle = angle;
-	}
-
-	public void getScale(Vector2f dest) {
-		dest.set(scale);
-	}
-
-	public void setScale(float sx, float sy) {
-		scale.x = sx;
-		scale.y = sy;
-	}
-	
-
-	public void draw() {
-		
+	public void drawSelf(Matrix4f mvpMatrix) {
 		shader.enable();
-
-		// draw the stem
-		calcModelMatrix();
-		shader.setUniform("u_modelMatrix", modelMatrix);
-	    shader.setAttribute("a_position", stemVertexBuffer);
-	    shader.setUniform("u_colour", stemColour);	    
+		shader.setUniform("u_mvpMatrix", mvpMatrix);
+	    shader.setAttribute("a_position", vertexBuffer);
+	    shader.setUniform("u_colour", colour);	    
 	    
-	    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, stemIndexBuffer);
-	    glDrawElements(GL_TRIANGLES, stemIndices.length, GL_UNSIGNED_INT, 0);		
-
-	    // TODO: draw the flower head
-		
-	}
-
-	private void calcModelMatrix() {
-		// TODO calculate the model matrix
-		
-		modelMatrix.identity();
-	}
-
-	public void update(float dt) {
-		// TODO: make the flower sway and the head rotate 
+	    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+	    glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_INT, 0);		
 	}
 	
+	public void update(float dt) {
+		// TODO: make the flower sway. (TASK 5)
+	}
 }

@@ -1,59 +1,34 @@
 package comp3170.week5;
 
-import org.lwjgl.opengl.GLCapabilities;
-import static org.lwjgl.opengl.GL41.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.joml.Matrix4f;
-import org.joml.Vector2f;
-import org.joml.Vector3f;
-
-import comp3170.GLBuffers;
-import comp3170.OpenGLException;
-import comp3170.IWindowListener;
-import comp3170.Shader;
-import comp3170.ShaderLibrary;
-import comp3170.Window;
+import org.joml.Vector4f;
+import comp3170.InputManager;
 import comp3170.SceneObject;
 
 import comp3170.week5.sceneobjects.*;
 
 public class Scene extends SceneObject {
-	
-	private List<Flower> flowers;
-
+	private Camera camera;
 	
 	public Scene() {
-		
-		// initialise flowers
-		flowers = new ArrayList<Flower>();
-		
-		Flower flower = new Flower(6);
-		flowers.add(flower);
-		
+		camera = new Camera();
+		createFlower(new Vector4f(0.0f,0.0f,0.f,1.0f));		
 	}
-
-	public void draw() {
-
-		for (Flower flower : flowers) {
-			flower.draw();
-		}
-		// draw the stem
 	
-
-	    // TODO: draw the flower head
-		
+	public Camera sceneCam() {
+		return camera;
+	}
+	
+	public void createFlower(Vector4f position) {
+		Flower flower = new Flower(20);
+		flower.setParent(this);	
+		flower.getMatrix().translate(position.x,position.y,0.0f);
 	}
 
-
-	public void update(float dt) {
+	public void update(InputManager input, float dt) {
 		
-		for (Flower flower : flowers) {
-			flower.update(dt);
-		}
-		// TODO: make the flower sway and the head rotate 
+		camera.update(input, dt);
+		
+		// TODO: Update the flowers when animating them. (TASK 5)
 	}
 	
 }
