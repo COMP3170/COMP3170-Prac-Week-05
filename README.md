@@ -19,7 +19,7 @@ Hopefully by now the code should be familiar enough for you to find your own way
 
 This task involves combining and testing your knowledge of the unit thus far weeks (including this week's content). If you are stuck, you may wish to revise previous week's work.
 
-## Creating a flower
+## Task 1: Creating a flower
 To create the flower, we want to generate the required vertices and link them up based on how many petals are being set (the `nPetals` variable in the code). The flower head should have both an inner and outer radius:
 
 ![An image of a flower head diagram, with an inner and outer radius.](images/flowerdiagram.png)
@@ -34,7 +34,7 @@ Whatever method you choose, do some planning on how you'd achieve it. Creating a
 
 Your instructor will direct you as to discussion.
 
-## Add camera
+## Task 2: Add camera
 So now we've got a flower! But it's a bit big. Or rather, we're too far zoomed in. We need to create a camera that will allow us to see more of the flower field.
 
 A skeleton `Camera` class has been provided for you. Complete this class (and modify other classes) to:
@@ -50,7 +50,7 @@ Create a resize function in the camera class that changes the projection matrix 
 
 ![Image of flower in a bigger field](images/soloflower.png)
 
-## Click to spawn
+## Task 3: Click to spawn
 Woohoo, now we've got a great looking flower field! But...there's only one flower!
 
 We want to spawn a new flower at the mouse position whenever the user clicks on the screen. This takes a bit of doing, so let's break it down.
@@ -63,8 +63,8 @@ In the driver class, there is an Update method awaiting input with `if (input.wa
 
 Tip: Try printing your x and y values as you go so you can troubleshoot what you are getting.
 
-## Camera zoom
+## Task 4: Camera zoom
 It's all well and good to have the camera set-up, but to really test things out we want to change the projection matrix as we are going. Add code to the camera class to change the zoom value when the user presses up or down on the keyboard (there's some commented out code to help you get started).
 
-## Animated flower
+## Task 5: Animated flower
 As a final challenge, try to add some animation to your scene. Make the flower sway left and right, and the flowerhead spin. You can do something else if you'd like, the idea is to breathe some life into the scene.
